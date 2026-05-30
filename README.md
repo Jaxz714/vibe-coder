@@ -1,3 +1,5 @@
+[English](README.md) | [中文](README_CN.md)
+
 # Vibe Coder
 
 Quality guardrails for AI coding workflows. Automatically add code review, test generation, security scanning, and performance checks to your vibe coding sessions.
