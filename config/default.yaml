@@ -1,0 +1,24 @@
+# Default configuration for Vibe Coder.
+# Override any value by placing a vibe.yaml in your project root.
+
+review:
+  model: "claude-sonnet-4-20250514"
+  max_tokens: 4096
+
+testgen:
+  model: "claude-sonnet-4-20250514"
+  max_tokens: 4096
+
+watch:
+  poll_interval: 1.5
+
+security:
+  # Set to false to skip specific pattern categories.
+  check_secrets: true
+  check_sql_injection: true
+  check_dangerous_functions: true
+  check_xss: true
+
+# Uncomment and set your key here, or use the ANTHROPIC_API_KEY env var.
+# anthropic:
+#   api_key: "sk-ant-..."

@@ -1,0 +1,83 @@
+# Security patterns for Vibe Coder scanner.
+# Each entry has: name, regex, severity, description.
+
+patterns:
+  # ---- Hardcoded secrets ----
+  - name: hardcoded_api_key
+    regex: '(?:api[_-]?key|apikey|secret[_-]?key|access[_-]?token)\s*[=:]\s*[''"][A-Za-z0-9+/=_\-]{16,}[''"]'
+    severity: high
+    description: "Possible hardcoded API key or secret token."
+
+  - name: hardcoded_password
+    regex: '(?:password|passwd|pwd)\s*[=:]\s*[''"][^''"]{4,}[''"]'
+    severity: high
+    description: "Possible hardcoded password."
+
+  - name: aws_access_key
+    regex: 'AKIA[0-9A-Z]{16}'
+    severity: high
+    description: "Possible AWS Access Key ID."
+
+  - name: private_key_block
+    regex: '-----BEGIN (?:RSA |EC )?PRIVATE KEY-----'
+    severity: high
+    description: "Private key found in source code."
+
+  # ---- SQL injection ----
+  - name: sql_injection_format
+    regex: '(?:execute|cursor\.execute|query)\s*\(\s*f[''"]|\.format\(|%\s*\(.*(?:SELECT|INSERT|UPDATE|DELETE)'
+    severity: high
+    description: "Possible SQL injection via string formatting."
+
+  - name: sql_injection_concat
+    regex: "(?:SELECT|INSERT|UPDATE|DELETE)\\b.*['\"]\\s*\\+\\s*\\w+"
+    severity: high
+    description: "Possible SQL injection via string concatenation."
+
+  # ---- Dangerous functions ----
+  - name: dangerous_eval
+    regex: '\b(?:eval|exec)\s*\('
+    severity: high
+    description: "Use of eval/exec — potential code injection."
+
+  - name: shell_true
+    regex: 'subprocess\.\w+\(.*shell\s*=\s*True'
+    severity: medium
+    description: "subprocess call with shell=True — potential command injection."
+
+  - name: pickle_load
+    regex: 'pickle\.load|pickle\.loads'
+    severity: medium
+    description: "Deserializing with pickle — can execute arbitrary code."
+
+  # ---- XSS ----
+  - name: xss_innerhtml
+    regex: '\.innerHTML\s*='
+    severity: medium
+    description: "Direct innerHTML assignment — possible XSS vector."
+
+  - name: xss_document_write
+    regex: 'document\.write\s*\('
+    severity: medium
+    description: "document.write usage — possible XSS vector."
+
+  - name: xss_jquery_html
+    regex: "\\.html\\s*\\("
+    severity: low
+    description: "jQuery .html() call — possible XSS if input is unescaped."
+
+  # ---- Misc ----
+  - name: debug_enabled
+    regex: 'DEBUG\s*=\s*True'
+    severity: low
+    description: "DEBUG mode appears to be enabled."
+
+  - name: http_url
+    regex: "['\"]http://[^'\"]+['\"]"
+    severity: low
+    description: "Plain HTTP URL — consider using HTTPS."
+
+  - name: temp_file_no_cleanup
+    regex: 'tempfile\.(?:mktemp|NamedTemporaryFile)\(.*delete\s*=\s*False'
+    severity: low
+    description: "Temporary file created without auto-delete — ensure cleanup."
