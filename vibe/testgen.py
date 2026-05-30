@@ -69,7 +69,7 @@ def generate_tests(directory: Path, cfg: Config, *, output_dir: Path | None = No
         console.print("[bold red]Error:[/bold red] No Anthropic API key found. Set ANTHROPIC_API_KEY or configure it in vibe.yaml.")
         sys.exit(1)
 
-    model = cfg.get("testgen.model", "claude-sonnet-4-20250514")
+    model = cfg.get("testgen.model", "claude-sonnet-4-6")
     max_tokens = cfg.get("testgen.max_tokens", 4096)
     client = Anthropic(api_key=api_key)
 

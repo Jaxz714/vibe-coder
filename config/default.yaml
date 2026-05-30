@@ -2,11 +2,11 @@
 # Override any value by placing a vibe.yaml in your project root.
 
 review:
-  model: "claude-sonnet-4-20250514"
+  model: "claude-sonnet-4-6"
   max_tokens: 4096
 
 testgen:
-  model: "claude-sonnet-4-20250514"
+  model: "claude-sonnet-4-6"
   max_tokens: 4096
 
 watch:

@@ -101,7 +101,7 @@ def _call_claude(user_prompt: str, cfg: Config) -> str:
         console.print("[bold red]Error:[/bold red] No Anthropic API key found. Set ANTHROPIC_API_KEY or configure it in vibe.yaml.")
         sys.exit(1)
 
-    model = cfg.get("review.model", "claude-sonnet-4-20250514")
+    model = cfg.get("review.model", "claude-sonnet-4-6")
     max_tokens = cfg.get("review.max_tokens", 4096)
 
     client = Anthropic(api_key=api_key)
